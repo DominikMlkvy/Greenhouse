@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Greenhouse</title>
+    <style>
+        #container{
+            margin-left: 40%;
+            width: 25%;
+            height: auto;
+            background-color: lightgray;
+            text-align: center;
+        }
+    </style>
+    <script>
+        function submit() {
+            var login = document.getElementById("login").value;
+            var password = document.getElementById("password").value;
+            var logouts=document.getElementsByName("expires");
+            var expires="";
+            for (var i in logouts){
+                if (logouts[i].checked){
+                    expires=logouts[i].value
+                }
+            }
+            if (window.XMLHttpRequest) {
+                xmlhttp = new XMLHttpRequest();
+            } else {
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var response=JSON.parse(xmlhttp.response);
+                    sessionStorage.setItem("token", response.token);
+                    window.location.replace("/");
+
+                } else if (this.readyState == 4 && this.status != 200) {
+                    alert(this.statusText)
+                }
+            };
+            xmlhttp.open("POST", "sign_in", true);
+            xmlhttp.send("login=" + login + "&password=" + password +"&expires=" + expires);
+        }
+    </script>
+</head>
+<body>
+    <div id =container>
+            Login: <input type="text" class="userdata" id="login" name="login"> <br>
+            Password: <input type="password" class ="userdata" id="password" name="password"> <br>
+                        1m<input type="radio" id="1m" name="expires" value="1m">
+                        5m<input type="radio" id="5m" name="expires" value="5m">
+                        30m<input type="radio" id="30m" name="expires" value="30m">
+                        1h<input type="radio" id="1h" name="expires" value="1h">
+                        5h<input type="radio" id="5h" name="expires" value="5h"> <br>
+            <input id="sub" type="button" value="Submit" onclick="submit()">
+    </div>
+
+</body>
+</html>
