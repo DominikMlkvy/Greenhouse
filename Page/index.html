@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greenhouse</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bitter:400,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Josefin+Sans:100,300,400">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700">
+    <link rel="stylesheet" href="assets/css/Features-Boxed.css">
+    <link rel="stylesheet" href="assets/css/Footer-Dark.css">
+    <link rel="stylesheet" href="assets/css/Header--Menu--Sections.css">
+    <link rel="stylesheet" href="assets/css/Header-Dark.css">
+    <link rel="stylesheet" href="assets/css/Navigation-with-Button.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    
+    <style>
+        small{
+            display: none;
+        }
+        .warnings{
+            visibility: hidden;
+        }
+    </style>
+
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="assets/js/scripts.js"> </script>
+
+    <script>
+
+        google.charts.load('current', {'packages':['gauge']});
+        google.charts.load('current', {'packages':['corechart']});
+        //google.charts.setOnLoadCallback(drawChart);
+        /*function drawChart() {
+            var t_data = google.visualization.arrayToDataTable([
+                ['Label', 'Value'],
+                ['Vnútorná teplota', 25]
+            ]);
+
+            var h_data = google.visualization.arrayToDataTable([
+                ['Label', 'Value'],
+                ['Vnútorná vlhkosť', 50]
+            ]);
+
+            var sh_data = google.visualization.arrayToDataTable([
+                ['Label', 'Value'],
+                ['Vlhkosť pôdy', 70]
+            ]);
+
+            var l_data = google.visualization.arrayToDataTable([
+                ['Label', 'Value'],
+                ['svetlo', 60]
+            ]);
+
+            var ot_data = google.visualization.arrayToDataTable([
+                ['Label', 'Value'],
+                ['Vonkajšia teplota', 20]
+            ]);
+            var p_data = google.visualization.arrayToDataTable([
+                ['Label', 'Value'],
+                ['tlak', 1000]
+            ]);
+            var r_data = google.visualization.arrayToDataTable([
+                ['Label', 'Value'],
+                ['dazd', 0]
+            ]);
+
+            var t_options = {
+                width: 160, height: 160,
+                redFrom: 30, redTo: 60,
+                minorTicks: 10, min: 10, max: 60,
+                majorTicks: ["10", "20", "30", "40", "50", "60"]
+            };
+
+            var h_options = {
+                width: 160, height: 160,
+                redFrom: 80, redTo: 100,
+                yellowFrom: 0, yellowTo: 20,
+                minorTicks: 4,
+                min: 0, max: 100,
+                majorTicks: ["0", "20", "40", "60", "80", "100"]
+            };
+            var sh_options = {
+                width: 160, height: 160,
+                redFrom: 90, redTo: 100,
+                yellowFrom: 0, yellowTo: 40,
+                minorTicks: 4,
+                min: 0, max: 100,
+                majorTicks: ["0", "20", "40", "60", "80", "100"]
+            };
+            var l_options = {
+                width: 120, height: 120,
+                redFrom: 0, redTo: 40,
+                yellowFrom: 40, yellowTo: 80,
+                minorTicks: 5,
+                min: 0, max: 100,
+                majorTicks: ["0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100"]
+            };
+            var ot_options = {
+                width: 120, height: 120,
+                redFrom: 0, redTo: 40,
+                yellowFrom: 40, yellowTo: 80,
+                minorTicks: 5,
+                min: 0, max: 100,
+                majorTicks: ["0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100"]
+            };
+            var p_options = {
+                width: 120, height: 120,
+                redFrom: 0, redTo: 40,
+                yellowFrom: 40, yellowTo: 80,
+                minorTicks: 5,
+                min: 0, max: 100,
+                majorTicks: ["0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100"]
+            };
+            var r_options = {
+                width: 120, height: 120,
+                redFrom: 0, redTo: 40,
+                yellowFrom: 40, yellowTo: 80,
+                minorTicks: 5,
+                min: 0, max: 100,
+                majorTicks: ["0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100"]
+            };
+
+            var t_chart = new google.visualization.Gauge(document.getElementById('temp_gauge'));
+            var h_chart = new google.visualization.Gauge(document.getElementById('hum_gauge'));
+            var sh_chart = new google.visualization.Gauge(document.getElementById('shum_gauge'));
+            var l_chart = new google.visualization.Gauge(document.getElementById('light_gauge'));
+            var ot_chart = new google.visualization.Gauge(document.getElementById('ot_gauge'));
+            var p_chart = new google.visualization.Gauge(document.getElementById('pres_gauge'));
+            var r_chart = new google.visualization.Gauge(document.getElementById('rain_gauge'));
+
+
+            t_chart.draw(t_data, t_options);
+            h_chart.draw(h_data, h_options);
+            sh_chart.draw(sh_data, sh_options);
+            l_chart.draw(l_data, l_options);
+            ot_chart.draw(ot_data, ot_options);
+            p_chart.draw(p_data, p_options);
+            r_chart.draw(r_data, r_options);
+        }*/
+
+
+
+
+
+        function showhelp(id){
+            document.getElementById(id).style.display="block";
+            setTimeout(function() {
+                document.getElementById(id).style.display="none";
+            }, 3000);
+        }
+    
+    </script>
+</head>
+
+<body onload="start()">
+    <div>
+        <div class="header-dark" style="background-image:url(&quot;assets/img/bg.jpeg&quot;);padding:0;">
+            <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search" style="background-color:#ccd8c8;">
+                <div class="container" style="max-width:100%; margin-left: 2%; margin-right: 2%"><a class="navbar-brand" id="username" style="color:#296333;">Meno používateľa</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                    <div
+                        class="collapse navbar-collapse" id="navcol-1">
+                        <ul class="nav navbar-nav" onclick='refresh("device_list", "devices", "greenhouse", "id", null)'>
+                            <li class="dropdown" ><a class="dropdown-toggle nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="color:#296333;">Dostupné skleníky</a>
+                                <div class="dropdown-menu" role="menu" id="device_list" style="background-color:#ccd8c8;margin:0;color:#ccd8c8;"><a class="dropdown-item" role="presentation" style="padding:0;color:#ccd8c8;"><button class="btn btn-light" type="button" style="width:156px;background-color:rgba(0,0,0,0);color:#296333;margin:2px;">Skleník1</button></a>
+                                    <a class="dropdown-item" role="presentation" style="padding:0px;"><button class="btn btn-light" type="button" style="width:156px;background-color:rgba(0,0,0,0);color:#296333;margin:2px;">Skleník1</button></a>
+                                </div>
+                            </li>
+                        </ul><span class="navbar-text"></span><button class="btn btn-primary ml-auto action-button" type="button" onclick="log_out()" style="background-color:#296333;color:#ccd8c8;">Odhlasiť sa</button></div>
+        </div>
+        </nav>
+        <div class="container hero">
+            <div class="row d-flex">
+                <div class="col">
+                    <div class="row justify-content-center">
+                        <div class="col" style="width:170px;max-width:170px;">
+                            <div id= "temp_gauge" style="height:160px;width:160px;max-width:170px;"></div>
+                        </div>
+                        <div class="col" style="width:170px;max-width:170px;">
+                            <div id="hum_gauge" style="height:160px;width:160px;max-width:170px;"></div>
+                        </div>
+                        <div class="col" style="width:170px;max-width:170px;">
+                            <div id="shum_gauge" style="height:160px;width:160px;max-width:170px;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8 offset-md-2" style="margin-left:0;"><button class="btn btn-primary btn-sm float-right" type="button" onclick='refresh("Telemetry", "parameters", "telemetry")' style="background-color:#296333;border-radius:30px;color:#ccd8c8;"><i class="icon ion-refresh"></i></button>
+                    <h1 class="text-center">Skleník 1</h1><img class="img-fluid" id= "camera" src="assets/img/demo.jpg" style="width:80%;margin-left:10%;"></div>
+                <div class="col">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col" style="width:130px;">
+                            <div id="light_gauge" style="width:120px;height:120px;"></div>
+                        </div>
+                        <div class="col" style="width:130px;">
+                            <div id="ot_gauge" style="width:120px;height:120px;"></div>
+                        </div>
+                        <div class="col" style="width:130px;">
+                            <div id="pres_gauge" style="width:120px;height:120px;"></div>
+                        </div>
+                        <div class="col" style="width:130px;">
+                            <div id="rain_gauge" style="width:120px;height:120px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin:0px;">
+            <div class="col"><i class="icon ion-earth float-left warnings"  id="offlineIcon" onmouseover='showhelp("offline")' style="width:50px;height:50px;color:#d81c3f;font-size:40px;"></i><small class="form-text float-none" id="offline" style="width:150px;font-size:16px;background-color:rgba(79,121,66,0.26);color:#f0f9ff;">Skleník je offline</small></div>
+            <div
+                class="col"><i class="icon ion-ios-flame float-left warnings" id="heatingIcon" onmouseover='showhelp("isHeating")' style="width:50px;height:50px;color:#d81c3f;font-size:40px;"></i><small class="form-text float-none" id="isHeating" style="width:150px;font-size:16px;background-color:rgba(79,121,66,0.26);color:#f0f9ff;">Kúrenie je spustené</small></div>
+        <div
+            class="col"><i class="icon ion-paintbucket float-left warnings" id="wateringIcon" onmouseover='showhelp("isWatering")' style="width:50px;height:50px;color:#3a75c4;font-size:40px;"></i><small class="form-text float-none" id="isWatering" style="width:150px;font-size:16px;/*display:none;*/background-color:rgba(79,121,66,0.26);color:#f0f9ff;">Polievanie je spustené</small></div>
+    <div
+        class="col"><i class="icon ion-ios-lightbulb float-left warnings" id="lightingIcon" onmouseover='showhelp("isLighting")' style="width:50px;height:50px;color:#f4ed7c;font-size:40px;"></i><small class="form-text float-none" id ="isLighting" style="width:150px;font-size:16px;/*display:none;*/background-color:rgba(79,121,66,0.26);color:#f0f9ff;">Osvetlenie je zapnuté</small></div>
+        <div
+            class="col"><i class="icon ion-ios-flower float-left warnings" id="ventilationIcon" onmouseover='showhelp("isVent")' style="width:50px;height:50px;color:#eeeeee;font-size:40px;"></i><small class="form-text d-block float-none" id="isVent" style="width:160px;font-size:16px;/*display:none;*/background-color:rgba(79,121,66,0.26);color:#f0f9ff;">Vetranie, otvorené okno</small></div>
+            <div
+                class="col"><i class="icon ion-thermometer float-left warnings" onmouseover='showhelp("badTemp")' style="width:50px;height:50px;color:#d81c3f;font-size:40px;"></i><small class="form-text float-none" id="badTemp" style="width:150px;font-size:16px;/*display:none;*/background-color:rgba(79,121,66,0.26);color:#f0f9ff;">Teplota nízka alebo vysoká</small></div>
+                <div
+                    class="col"><i class="icon ion-umbrella float-left warnings" onmouseover='showhelp("badHum")' style="width:50px;height:50px;color:#bc5e1e;font-size:40px;"></i><small class="form-text float-none" id="badHum" style="width:150px;font-size:16px;/*display:none;*/background-color:rgba(79,121,66,0.26);color:#f0f9ff;">Vlhkosť nízka alebo vysoká</small></div>
+                    <div
+                        class="col"><i class="icon ion-waterdrop float-left warnings" onmouseover='showhelp("badShum")' style="width:50px;height:50px;color:#bc5e1e;font-size:40px;"></i><small class="form-text float-none" id="badShum" style="width:180px;font-size:16px;/*display:none;*/background-color:rgba(79,121,66,0.26);color:#f0f9ff;">Pôda príliž suchá alebo príliž mokrá</small></div>
+                        <div
+                            class="col"><i class="icon ion-android-alert float-left warnings" id="errorIcon" onmouseover='showhelp("otherError")' style="width:50px;height:50px;color:#ce1126;font-size:40px;"></i><small class="form-text float-none" id="otherError" style="width:150px;font-size:16px;/*display:none;*/background-color:rgba(79,121,66,0.26);color:#f0f9ff;">Porucha skleníka</small></div>
+                            </div>
+                            </div>
+                            </div>
+                            <div class="features-boxed" style="padding-bottom:5px;background-color:rgba(79,121,66,0.26);">
+                                <div style="padding:15px;background-color:rgba(255,255,255,0);">
+                                    <div class="row" style="margin-right:0;margin-left:0;">
+                                        <div class="col" style="padding:15px;width:390px;min-width:300px;">
+                                            <div class="float-none box" style="margin:0;background-color:#ffffff;height:100%;">
+                                                <div class="table-responsive">
+                                                    <table class="table table-sm">
+                                                        <thead>
+                                                            <tr style="width:400px;">
+                                                                <th class="justify-content-center align-items-center" colspan="3" style="font-size:20px;color:#296333;">Používateľské interakcie<button class="btn btn-primary btn-sm float-right" type="button" onclick='refresh("UI", "parameters", "ui")' style="background-color:rgba(79,121,66,0.26);border-radius:30px;padding:0;padding-right:5px;padding-left:5px;padding-bottom:2px;color:#296333;"><i class="icon ion-refresh" style="font-size:12px;"></i></button></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>Požadovaná teplota</td>
+                                                                <td><input class="form-control-sm" type="number" name="d_temp" value="15" min="15" max="40"  onchange="submitData('parameters','d_temp', 12, 'ui' )" style="font-size:16px;width:80px;"></td>
+                                                                <td style="width:42px;">°C</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Požadovaná vlhkosť</td>
+                                                                <td><input class="form-control-sm" type="number" name="d_hum" value="0" min="0" max="100" onchange="submitData('parameters','d_hum', 13, 'ui' )" style="font-size:16px;width:80px;"></td>
+                                                                <td>%</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Minimálna vlhkosť pôdy</td>
+                                                                <td><input class="form-control-sm" type="number" name="s_hum_l" value="0" min="0" max="100" onchange="submitData('parameters','s_hum_l', 14, 'ui' )" style="width:80px;font-size:16px;"></td>
+                                                                <td>%</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Maximálna vlhkosť pôdy</td>
+                                                                <td><input class="form-control-sm" type="number" name="s_hum_h" value="0" min="0" max="100" onchange="submitData('parameters','s_hum_h', 15, 'ui' )" style="width:80px;font-size:16px;"></td>
+                                                                <td>%</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Minimálna teplota pri vetraní</td>
+                                                                <td><input class="form-control-sm" type="number" name="vent_t_l" value="10" min="10" max="40" onchange="submitData('parameters','vent_t_l', 16, 'ui' )" style="width:80px;font-size:16px;"></td>
+                                                                <td>°C</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Trvanie manuálneho polievacieho cyklu</td>
+                                                                <td style="width:110px;"><input class="form-control-sm" type="number" name="w_duration" value="0" min="0" onchange="submitData('parameters','w_duration', 17, 'ui' )" style="width:80px;font-size:16px;"></td>
+                                                                <td>m</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="height:58.4px;min-width:170px;">Minimálny čas medzi polievacími cyklami</td>
+                                                                <td><input class="form-control-sm" type="number" name="w_cooldown" value="0" min="0" onchange="submitData('parameters','w_cooldown', 18, 'ui' )" style="width:80px;font-size:16px;"></td>
+                                                                <td>h</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col" style="padding:0;min-width:300px;height:100%;">
+                                            <div class="row" style="margin:0px;height:100%;">
+                                                <div id="historyG" class="col small" style="padding:15px;min-width:300px;min-height:169px">
+                                                    <div class="float-none box" style="margin:0;background-color:#ffffff;width:100%; height: 100%;min-height:169px;">
+                                                        <h5 style="font-weight:bold;font-size:20px;padding-right:3px;padding-left:12px;color:#296333;padding-top:3px;">Graf histórie
+                                                            <button class="btn btn-primary btn-sm float-right" type="button" onclick="refreshHistory()" style="background-color:rgba(79,121,66,0.26);border-radius:30px;padding:0;padding-right:5px;padding-left:5px;padding-bottom:2px;color:#296333;"><i class="icon ion-refresh" style="font-size:12px;"></i></button>
+                                                            <button class="btn btn-primary btn-sm float-right" type="button" onclick="changeSize('historyG')" style="background-color:rgba(79,121,66,0.26);border-radius:30px;padding:0;padding-right:5px;padding-left:5px;padding-bottom:2px;color:#296333;margin-right:3px;"><i class="icon ion-android-expand" style="font-size:12px;"></i></button>
+                                                            <input type="date" id="h_date" value="2019-01-01" onchange="refreshHistory()" style='font-size: 16px; width: 150px; float: right '>
+                                                        </h5>
+                                                        <div id="history_chart"  style="width:100%;min-height:170px;max-height:300px;height:80%;"></div></div>
+                                                </div>
+                                                <div class="col" style="padding:15px;min-width:300px;height:100%;">
+                                                    <div class="float-none box" style="margin:0;background-color:#ffffff;height:100%;">
+                                                        <div class="table-responsive" style="height:100%;">
+                                                            <table class="table table-sm">
+                                                                <thead>
+                                                                    <tr style="width:400px;">
+                                                                        <th colspan="3" style="font-size:20px;color:#296333;">Akcie<button class="btn btn-primary btn-sm float-right" type="button" onclick='refresh("Switches", "parameters", "switch")' style="background-color:rgba(79,121,66,0.26);border-radius:30px;padding:0;padding-right:5px;padding-left:5px;padding-bottom:2px;color:#296333;"><i class="icon ion-refresh" style="font-size:12px;"></i></button></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>Kúrenie</td>
+                                                                        <td><input type="checkbox" name="heating"  onchange="submitData('parameters','heating', 8, 'switch' )" style="width:20px;color:rgb(255,0,0);height:20px;margin-left:20px;margin-top:5px;"></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Polievanie</td>
+                                                                        <td><input type="checkbox" name="watering" onchange="submitData('parameters','watering', 9, 'switch' )" style="width:20px;color:rgb(255,0,0);height:20px;margin-left:20px;margin-top:5px;"></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Osvetlenie</td>
+                                                                        <td><input type="checkbox" name= "lighting" onchange="submitData('parameters','lighting', 10, 'switch' )" style="width:20px;color:rgb(255,0,0);height:20px;margin-left:20px;margin-top:5px;"></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Vetranie</td>
+                                                                        <td><input type="checkbox" name="ventilation" onchange="submitData('parameters','ventilation', 11, 'switch' )" style="width:20px;color:rgb(255,0,0);height:20px;margin-left:20px;margin-top:5px;"></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col" style="padding:15px;width:390px;min-width:300px;">
+                                            <div class="float-none box" style="margin:0;background-color:#ffffff;">
+                                                <h5 style="font-weight:bold;font-size:20px;padding-right:3px;padding-left:12px;color:#296333;padding-top:3px;">Plánované polievanie<button class="btn btn-primary btn-sm float-right" type="button" onclick="refresh('schedules-w', 'schedules', 'watering' )" style="background-color:rgba(79,121,66,0.26);border-radius:30px;padding:0;padding-right:5px;padding-left:5px;padding-bottom:2px;color:#296333;"><i class="icon ion-refresh" style="font-size:12px;"></i></button></h5>
+                                                <div
+                                                    class="table-responsive">
+                                                    <table class="table table-sm" id="schedules-w">
+                                                        <thead>
+                                                            <tr class="stable">
+                                                                <th style="color:#296333;">Začiatok</th>
+                                                                <th style="color:#296333;">Koniec</th>
+                                                                <th style="width:80px;color:#296333;">Aktívny</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr id="1">
+                                                                <td><input class="sch1" type="time" name="start" value="08:00" step="300" style="width:80px;background-color:rgba(255,255,255,0);"></td>
+                                                                <td><input class="sch1" type="time" name="stop" value="08:05" step="300" style="width:80px;height:100%;background-color:rgba(255,255,255,0);"></td>
+                                                                <td><input class="sch1" type="checkbox" name="state" value="1" checked="" style="width:20px;height:20px;margin-top:5px;margin-left:20px;background-color:rgba(255,255,255,0);color:#254d32;"></td>
+                                                                <td style="padding-bottom:0px;padding-right:0px;padding-left:0px;width:80px;"><button class="btn btn-light sch1" type="button" onclick="deleteSchedule(1)" style="background-color:rgba(255,255,255,0);height:30px;padding-bottom:10px;padding-top:2px;border-radius:30px;"><i class="fa fa-trash-o" style="font-size:25px;"></i></button></td>
+                                                            </tr>
+                                                            <tr id="b">
+                                                                <td><input type="time" name="start" value="09:00" step="300" style="width:80px;background-color:rgba(255,255,255,0);"></td>
+                                                                <td><input type="time" name="stop" value="09:05" step="300" style="width:80px;background-color:rgba(255,255,255,0);"></td>
+                                                                <td><input type="checkbox" name="state" value="1" checked="" style="width:20px;height:20px;margin-top:5px;margin-left:20px;"></td>
+                                                                <td style="padding-bottom:0px;padding-right:0px;padding-left:0px;width:80px;"><button class="btn btn-light" type="button" style="background-color:rgba(255,255,255,0);height:30px;padding-bottom:10px;padding-top:2px;border-radius:30px;"><i class="fa fa-trash-o" style="font-size:25px;"></i></button></td>
+                                                            </tr>
+                                                            <tr class="stable">
+                                                                <td colspan="4"><button class="btn btn-primary" type="button" onclick="newSchedule('schedules-w')" style="width:60%;background-color:rgba(79,121,66,0.26);color:#296333;font-weight:600;border-radius:30px;">Pridať nový plán</button></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                            </div>
+                                        </div>
+                                        <div class="float-none box" style="margin:0;background-color:#ffffff;margin-top:30px;">
+                                            <h5 style="font-weight:bold;margin-top:12px;font-size:20px;padding-left:12px;color:#296333;padding-top:3px;padding-right:3px;">Plánované vetranie<button class="btn btn-primary btn-sm float-right" type="button" onclick="refresh('schedules-v', 'schedules', 'ventilation' )" style="background-color:rgba(79,121,66,0.26);border-radius:30px;padding:0;padding-right:5px;padding-left:5px;padding-bottom:2px;color:#296333;"><i class="icon ion-refresh" style="font-size:12px;"></i></button></h5>
+                                            <div
+                                                class="table-responsive">
+                                                <table class="table table-sm" id="schedules-v">
+                                                    <thead>
+                                                        <tr class="stable">
+                                                            <th style="color:#296333;">Začiatok</th>
+                                                            <th style="color:#296333;">Koniec</th>
+                                                            <th style="width:80px;color:#296333;">Aktívny</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr id ="sample">
+                                                            <td><input type="time" name="start" value="00:00" step="300" style="width:80px;height:100%;background-color:rgba(255,255,255,0);"></td>
+                                                            <td><input type="time" name="stop" value="00:00" step="300" style="width:80px;height:100%;background-color:rgba(255,255,255,0);"></td>
+                                                            <td><input type="checkbox" name="state" value="1" checked="" style="width:20px;height:20px;margin-top:5px;margin-left:20px;"></td>
+                                                            <td style="padding-bottom:0px;padding-right:0px;padding-left:0px;width:80px;"><button class="btn btn-light" type="button" style="background-color:rgba(255,255,255,0);height:30px;padding-bottom:10px;padding-top:2px;border-radius:30px;"><i class="fa fa-trash-o" style="font-size:25px;"></i></button></td>
+                                                        </tr>
+                                                        <tr id = "sample2">
+                                                            <td><input type="time" name="start" value="01:00" step="300" style="width:80px;height:100%;background-color:rgba(255,255,255,0);"></td>
+                                                            <td><input type="time" name="stop" value="01:05" step="300" style="width:80px;height:100%;background-color:rgba(255,255,255,0);"></td>
+                                                            <td style="width:80px;"><input type="checkbox" name="state" value="1" checked="" style="width:20px;height:20px;margin-top:5px;margin-left:20px;"></td>
+                                                            <td style="padding-bottom:0px;padding-right:0px;padding-left:0px;"><button class="btn btn-light" type="button" style="background-color:rgba(255,255,255,0);height:30px;padding-bottom:10px;padding-top:2px;border-radius:30px;"><i class="fa fa-trash-o" style="font-size:25px;"></i></button></td>
+                                                        </tr>
+                                                        <tr class="stable">
+                                                            <td colspan="4"><button class="btn btn-primary" type="button" onclick="newSchedule('schedules-v')" style="width:60%;background-color:rgba(79,121,66,0.26);color:#296333;font-weight:600;border-radius:30px;">Pridať nový plán</button></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            </div>
+                            <script src="assets/js/jquery.min.js"></script>
+                            <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+
+
+
+</body>
+
+</html>

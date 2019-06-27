@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    
+    <title>Greenhouse</title>
+
+    <style>
+        h1{
+            text-align: center;
+        }
+        table {
+            position: relative;
+            left: 10%;
+            right: auto;
+            width: 80%;
+            height: 50%;
+            border: black;
+            border-style: solid;
+            border-width: thick;
+            text-align: center;
+            background-color: lightgray;
+            font-size: 200%;
+
+        }
+        td {
+            border: black;
+            border-style: solid;
+            border-width: thin;
+            text-align: center;
+            background-color:white;
+            height: 50px;
+        }
+        input{
+            position: relative;
+            right:auto;
+            height: 100%;
+            border: none;
+            width: 100%;
+            font-size: 100%;
+            text-align: center;
+            background-color: white;
+        }
+        input[type='checkbox']{
+            height:70%;
+            margin-top: 3%;
+        }
+        #dev_choice{
+            overflow: auto;
+            white-space: nowrap;
+            background-color: white;
+            border: none;
+        }
+        #dev_choice li {
+            display: inline-block;
+            text-align: center;
+            padding: 14px;
+            text-decoration: none;
+            border-width: thin;
+            border-color: black;
+            border-style: outset;
+        }
+        #dev_choice li:hover {
+            color: white;
+            border-width: thin;
+            border-style: dotted;
+            border-color: black;
+        }
+    </style>
+    <script src="modul.js"></script>
+    <script>
+        var schedData={"watering":[], "ventilation":[]};
+        var parData={"telemetry":[], "switch":[], "ui":[]};
+        var devData=[];
+        var dev_id= -1;
+
+        function refresh(tabName, tabData, type=null, order='id', device=dev_id, firstRun=false){
+            var table= document.getElementById(tabName);
+            if(table.rows) {
+                var header = table.rows[0].innerHTML;
+            }
+            if(window.XMLHttpRequest){
+                xmlhttp= new XMLHttpRequest();
+            } else {
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange = function(){
+                if(this.readyState==4 &&this.status == 200){
+                    var data = (JSON.parse(this.response));
+
+                    switch (type) {
+                        case "watering":
+                            oldData=schedData.watering;
+                            break;
+                        case "ventilation":
+                            oldData=schedData.ventilation;
+                            break;
+                        case "telemetry":
+                            oldData=parData.telemetry; break;
+                        case "switch":
+                            oldData=parData.switch; break;
+                        case "ui":
+                            oldData=parData.ui;break;
+                        default:
+                            oldData=[];
+                    }
+
+
+                    if(JSON.stringify(data)===JSON.stringify(oldData)){
+                        return;
+                    }
+                    
+                    if (tabData=="schedules") {
+                    table.innerHTML = header +"<tr>" +table.rows[1].innerHTML+ "</tr>";
+                    for (row in data){
+                        table.innerHTML+=
+                            "<tr><td> <input type=\"time\" name= start"+data[row].id +
+                                    " value=" + data[row].start + " onchange= 'submitData(\"schedules\", \"start"+data[row].id+"\",  \""+data[row].type+"\")' > </td><td> <input type=\"time\" name= stop" +data[row].id +
+                                    " value=" + data[row].stop + " onchange= 'submitData(\"schedules\", \"stop"+data[row].id+"\", \""+data[row].type+"\")' ></td><td> <input type=\"checkbox\" name=state" + data[row].id +
+                                    " value= "+ (!data[row].state) +" onchange= 'submitData(\"schedules\", \"state"+data[row].id+"\", \""+data[row].type+"\")' "+checkBoxes(data[row].state)+" ></td> <td> <input type = \"image\" src =delete.png alt= \"X\" name =\"delete"+data[row].id+"\" onclick='deleteSchedule("+ data[row].id +")' class=\"delete\"> </td></tr>";
+                    }
+                    table.innerHTML+= "<tr><td id=\"new_sched\" colspan= 4><input type=\"button\" value=\"New schedule\" onclick='newSchedule(\""+tabName +"\")'></td><tr>";
+                        
+                    } else if (tabData=="parameters") {
+                        table.innerHTML = header;
+                        for (row in data){
+                            if (type=="telemetry"){
+                                table.innerHTML+=
+                                    "<tr><td>"+ data[row].description + "</td><td>" + data[row].value + "</td><td>" + data[row].unit + "</td></tr>";
+                                
+                            } else if (type == "switch"){
+                                table.innerHTML+= "<tr><td>" + data[row].description + "</td> <td> <input  class =\"switch\" type=\"checkbox\" name=switch" + data[row].id + " id=" + data[row].name +" value= "+Number(!data[row].value)+" onchange= 'submitData(\"parameters\", \"switch"+data[row].id+"\")' "+ checkBoxes(data[row].value) +" ></td></tr>"
+    
+                            } else if (type == "ui"){
+                                table.innerHTML+=
+                                    "<tr><td>"+ data[row].description + "</td><td><input class=\"spinner1\" type=\"number\" name=ui"+data[row].id +
+                                    " id=" + data[row].name +" value=" + data[row].value + " required onchange= 'submitData(\"parameters\", \"ui"+data[row].id+"\")' > </td> <td>" + data[row].unit + "</td></tr>";
+                            }
+                        }
+                    }
+                    else if (tabData="devices"){
+                        table.innerHTML="";
+                        for (row in data) {
+                            table.innerHTML += "<li><input type=\"button\" onclick='loadDevice(" + data[row].id + ", false)' value= " + data[row].name + "></li>"
+                        }
+                    }
+
+
+                    switch (type) {
+                        case "watering":
+                            schedData.watering= data;
+                            break;
+                        case "ventilation":
+                            schedData.ventilation= data;
+                            break;
+                        case "telemetry":
+                            parData.telemetry= data;
+                            break;
+                        case "switch":
+                            parData.switch=data;
+                            break;
+                        case "ui":
+                            parData.ui=data;
+                            break;
+                        case "greenhouse":
+                            devData=data;
+                            if (firstRun) {
+                                loadDevice(devData[0].id);
+                            };
+                            break;
+                    }
+
+
+                }
+                else if(this.readyState==4 &&this.status == 401) {
+                    window.location.replace("/login");
+                }
+            };
+            xmlhttp.open("GET", "fetch?table=" +tabData+ "&device="+ device +"&type="+ type + "&order="+order, true);
+            xmlhttp.setRequestHeader("authorization", "bearer " + sessionStorage.getItem("token"));
+            xmlhttp.send();
+        }
+        
+        function submitData(tabData, elementId, type="none", device=dev_id){
+            console.log(elementId);
+            var element = document.getElementsByName(elementId)[0];
+            console.log(element)
+            var id= Number(element.name.match(/\d+/g));
+            var name = String(element.name.match(/[a-zA-Z]+/g));
+
+            if (name=="start" || name == "stop"){
+                element.value+=":00"
+            }
+
+            if ((name=="state") || (name =="switch")){
+                element.indeterminate = true;
+            }
+
+            var message = {"action":"update", "table": tabData, "device": device, "id":id, "name":name, "value": element.value, "type":type, "token":sessionStorage.getItem("token")}
+            ws.send(JSON.stringify(message));
+
+
+        }
+        
+        function checkBoxes(state){
+            if (state==true){
+                return "checked"
+            } else {
+                return "unchecked"
+            }
+        }
+
+        function deleteSchedule (id){
+            if(confirm("Are you sure?")===false){
+                return;
+            }
+            var message = {"action": "delete_schedule", "id":id};
+            ws.send(JSON.stringify(message));
+        }
+
+        function newSchedule (type){
+            var table = document.getElementById(type);
+            if (type=="w_schedules"){
+                var parType="watering";
+                var parId =3;
+            } else if(type=="v_schedules"){
+                var parType="ventilation";
+                var parId=5;
+            }
+
+            rowCount= table.rows.length;
+            var lastrow= table.insertRow(-1);
+            var colls=[];
+            for (i=0; i<4; i++){
+                colls.push(lastrow.insertCell(i));
+            }
+            colls[0].innerHTML="<input type = \"time\" id = \"newStart"+rowCount+"\" >";
+            colls[1].innerHTML="<input type = \"time\" id = \"newEnd"+rowCount+"\" >";
+            colls[2].innerHTML= "<input type= \"checkbox\" id=\"newEnabled"+rowCount+"\" value=1>";
+            colls[3].innerHTML= "<input type = \"image\" src=\"save.png\" class=\"save\" value=\"S\" alt=S" +
+                " onclick='saveSchedule(\""+ parType +"\", "+ rowCount +", "+parId+ ")'>"
+        }
+        function saveSchedule(parType, inRow, parId, device=dev_id){
+            start = document.getElementById("newStart"+inRow).value+":00";
+            stop = document.getElementById("newEnd"+inRow).value+":00";
+            state = document.getElementById("newEnabled"+inRow).checked;
+
+
+            var message = {"action": "insert_schedule", "start":start, "stop":stop, "state": state, "type": parType, "device":device, "par_id":parId};
+            ws.send(JSON.stringify(message));
+
+
+        }
+
+
+        function refreshall() {
+            refresh("telemetry", "parameters", "telemetry");
+            refresh("ui", "parameters", "ui");
+            refresh("switch", "parameters", "switch" );
+            refresh ("w_schedules","schedules", "watering");
+            refresh("v_schedules","schedules", "ventilation");
+            refresh("dev_choice", "devices", "greenhouse", "id", null)
+
+        }
+
+        function loadDevice(device, refreshed=true){
+            //console.log("refreshing "+device);
+            info= document.getElementById("info");
+            for (dev in devData){
+                if(devData[dev].id==device){
+                    info.innerHTML="<td class=\"dev_info\">" + devData[dev].state +"</td> <td class=\"dev_info\">"+ devData[dev].created +"</td>";
+                    dev_id=device;
+                    /*if (devData[dev].state || !refreshed) {
+                        refreshall();
+                    } else{
+                        refresh("dev_choice", "devices", "greenhouse", "id", null)
+                    }*/
+                    refreshall();
+                    return;
+                }
+            }
+        }
+
+        function start() {
+            firstid = refresh("dev_choice", "devices", "greenhouse", "id", null, true);
+            //loadDevice(firstid);
+            //timeout(5000);
+        }
+
+
+        var ws = new WebSocket('ws://localhost:3000', 'echo-protocol');
+        //var ws = new WebSocket('wss://greenhouse.makers.sk', 'echo-protocol');
+
+        var lastMessage=new Date();
+        ws.addEventListener("message", function(e) {
+            lastMessage=new Date();
+            var msg = JSON.parse(e.data);
+            if ((msg.command == "refresh")&&(msg.dev_id == dev_id)){
+                loadDevice(dev_id);
+
+            }
+
+        });
+
+        function timeout(time){
+            if (lastMessage < new Date( Date.now() - 1000 * 30) ){
+                ws.close();
+                alert("Disconnected, try reloading the page");
+                location.reload();
+            }
+            setTimeout(function(){timeout(time)}, time);
+        }
+        timeout(1000)
+
+
+
+    </script>
+    
+</head>
+<body onload="start()">
+    
+    <div id="container">
+        <div id=temperature class="gauge">
+        </div>
+    </div>
+    <div id="tables">
+        <table id = "devices">
+            <tr>
+                <th id="dev" colspan="5"> Devices  <button onclick='refresh("dev_choice", "devices", "greenhouse", "id", null)'>R</button> </th>
+            </tr>
+            <tr>
+                <td id="dev_choice" colspan="5">
+                    <ul>
+                    </ul>
+                </td>
+            </tr>
+            <tr id="info">
+                <td class="dev_info"> state </td> <td class="dev_info"> last active </td>
+            </tr>
+
+        </table>
+
+
+    <table id="telemetry">
+        <tr><th colspan="3"> Telemetry Values <button onclick='refresh("telemetry", "parameters", "telemetry")'>R</button></th>
+        </tr>
+        
+	</table>
+    
+<!--<form  id = "data" method="post" action="" onsubmit = "return submitData(this);">-->
+    
+	<table id= "ui">
+            <tr><th colspan="3"> User interaction
+                <button onclick='refresh("ui", "parameters", "ui")'>R</button></th>
+            </tr>
+    </table>
+
+    <table id= "switch">
+            <tr><th colspan="2"> Switches
+                <button onclick='refresh("switch", "parameters", "switch" )'>R</button>
+                </th>
+            </tr>
+    </table>
+    <table id= "w_schedules">
+        <tr>
+            <th colspan="4"> Watering schedule
+            <button onclick='refresh("w_schedules","schedules", "watering")'>R</button></th>
+        </tr>
+        <tr>
+            <td class="minor">
+                Start time
+            </td>
+            <td class="minor">
+                End time
+            </td>
+            <td class="minor">
+                Active
+            </td>
+            <td></td>
+        </tr>
+            <tr>
+                <td class="submit" colspan="4"><input type="button" value="New schedule" onclick='newSchedule("w_schedules")'></td>
+            </tr>
+    </table>
+    
+    <table id= "v_schedules">
+        <tr>
+            <th colspan="4"> Ventilation schedule
+            <button onclick='refresh("v_schedules","schedules", "ventilation")'>R</button></th>
+        </tr>
+        <tr>
+            <td class="minor">
+                Start time
+            </td>
+            <td class="minor">
+                End time
+            </td>
+            <td class="minor">
+                Active
+            </td>
+            <td></td>
+        </tr>
+            <tr>
+                <td class="submit" colspan="4"><input type="button" value="New schedule" onclick='newSchedule("v_schedules")'></td>
+            </tr>
+    </table>
+    
+        
+ <!--</form>-->
+    </div>
+
+
+
+    
+</body>
+</html>

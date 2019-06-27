@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greenhouse</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bitter:400,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Josefin+Sans:100,300,400">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700">
+    <link rel="stylesheet" href="assets/css/Features-Boxed.css">
+    <link rel="stylesheet" href="assets/css/Footer-Dark.css">
+    <link rel="stylesheet" href="assets/css/Header--Menu--Sections.css">
+    <link rel="stylesheet" href="assets/css/Header-Dark.css">
+    <link rel="stylesheet" href="assets/css/Login-Form-Dark.css">
+    <link rel="stylesheet" href="assets/css/Navigation-with-Button.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+    <div class="login-dark" style="background-image:url(&quot;assets/img/bg.jpeg&quot;);">
+        <form method="post" style="background-color:#ccd8c8;">
+            <h2 class="sr-only" style="font-size:18px; color: darkred; text-align: center">Login Form</h2>
+            <div class="illustration" style="color:#296333;"><i class="icon ion-ios-locked-outline"></i></div>
+            <div class="form-group"><input class="form-control" type="text" name="user" placeholder="Meno používateľa" style="color:#296333;"></div>
+            <div class="form-group"><input class="form-control" type="password" name="password" placeholder="Heslo" style="color:#296333;"></div>
+            <div class="form-group" style="margin-bottom: 90px">
+                <h6 class="text-center" style="color:#296333;margin-top:20px;">Odhlásiť po</h6>
+                <ul style="padding-inline-start:5px; padding-left: 5px">
+                    <li class="d-inline float-left" style="color:#7d8285;margin-right:15px;"><input class="d-block" type="radio" name="logout" value="5m" checked="" style="margin-left:13%;">5m</li>
+                    <li class="d-inline float-left" style="color:#7d8285;margin-right:15px;"><input class="d-block" type="radio" name="logout" value="30m" style="margin-left:20%;">30m</li>
+                    <li class="d-inline float-left" style="color:#7d8285;margin-right:15px;"><input class="d-block" type="radio" name="logout" value="1h" style="margin-left:13%;">1h</li>
+                    <li class="d-inline float-left" style="color:#7d8285;margin-right:15px;"><input class="d-block" type="radio" name="logout" value="5h" style="margin-left:13%;">5h</li>
+                    <li class="d-inline float-left" style="color:#7d8285;margin-right:-15px;"><input class="d-block" type="radio" name="logout" value="24h" style="margin-left:13%;">1d</li>
+                </ul>
+            </div>
+            <div class="form-group"><button class="btn btn-primary btn-block" id="butt" type="button" onclick="log_in()" style="background-color:#296333;border-radius:30px;">Prihlásiť sa</button></div>
+        </form>
+    </div>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/scripts.js"> </script>
+</body>
+
+</html>
