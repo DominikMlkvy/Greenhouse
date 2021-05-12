@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "dependencies": {
     "body-parser": "latest",
-    "chart.js": "^2.8.0",
+    "chart.js": "^2.9.4",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.5.0",
     "mqtt": "latest",
